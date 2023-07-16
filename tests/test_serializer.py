@@ -1,5 +1,7 @@
 import unittest
 
+from src.resp.serializer import encode_simple_string
+
 
 class RESPTest(unittest.TestCase):
     def test_serialize_string(self):
