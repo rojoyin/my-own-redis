@@ -1,6 +1,6 @@
 import unittest
 
-from src.resp.serializer import encode_simple_string, is_simple_string
+from src.resp.serializer import encode_simple_string, is_simple_string, encode_int
 
 
 class RESPTest(unittest.TestCase):
@@ -28,6 +28,11 @@ class RESPTest(unittest.TestCase):
         actual = encode_int(message)
         expected = ":5\r\n"
         self.assertEquals(actual, expected)
+
+    def test_error_no_int(self):
+        message = 2.8
+        with self.assertRaises(ValueError):
+            encode_int(message)
 
     def test_serialize_array(self):
         message = ["Hello", 42, None, "World"]
