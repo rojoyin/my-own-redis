@@ -7,3 +7,7 @@ def encode_simple_string(message):
     if not is_simple_string(message):
         raise ValueError("Not a valid simple string")
     return f"+{message}\r\n"
+
+
+def encode_int(message):
+    return f":{message}\r\n"
