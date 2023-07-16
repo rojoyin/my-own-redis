@@ -10,4 +10,6 @@ def encode_simple_string(message):
 
 
 def encode_int(message):
+    if not isinstance(message, int):
+        raise ValueError("Not a valid integer")
     return f":{message}\r\n"

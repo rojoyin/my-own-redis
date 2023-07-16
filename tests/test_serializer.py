@@ -29,6 +29,11 @@ class RESPTest(unittest.TestCase):
         expected = ":5\r\n"
         self.assertEquals(actual, expected)
 
+    def test_error_no_int(self):
+        message = 2.8
+        with self.assertRaises(ValueError):
+            encode_int(message)
+
     def test_serialize_array(self):
         message = ["Hello", 42, None, "World"]
         actual = encode_array(message)
