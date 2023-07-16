@@ -10,6 +10,14 @@ class RESPTest(unittest.TestCase):
         expected = "+Hello, World!\r\n"
         self.assertEquals(actual, expected)
 
+    def test_is_simple_string(self):
+        message = "Hello, World!"
+        self.assertTrue(is_simple_string(message))
+
+    def test_no_simple_string(self):
+        message = "This string contains an LF (\n) character."
+        self.assertFalse(is_simple_string(message))
+
     def test_serialize_int(self):
         message = 5
         actual = encode_int(message)
