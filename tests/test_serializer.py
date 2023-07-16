@@ -1,5 +1,7 @@
 import unittest
 
+from src.resp.serializer import encode_simple_string, is_simple_string
+
 
 class RESPTest(unittest.TestCase):
     def test_serialize_string(self):
@@ -7,6 +9,19 @@ class RESPTest(unittest.TestCase):
         actual = encode_simple_string(message)
         expected = "+Hello, World!\r\n"
         self.assertEquals(actual, expected)
+
+    def test_is_simple_string(self):
+        message = "Hello, World!"
+        self.assertTrue(is_simple_string(message))
+
+    def test_no_simple_string(self):
+        message = "This string contains an LF (\n) character."
+        self.assertFalse(is_simple_string(message))
+
+    def test_error_raise_no_simple_string(self):
+        message = "Invalid\rSimple String"
+        with self.assertRaises(ValueError):
+            encode_simple_string(message)
 
     def test_serialize_int(self):
         message = 5
