@@ -18,6 +18,11 @@ class RESPTest(unittest.TestCase):
         message = "This string contains an LF (\n) character."
         self.assertFalse(is_simple_string(message))
 
+    def test_error_raise_no_simple_string(self):
+        message = "Invalid\rSimple String"
+        with self.assertRaises(ValueError):
+            encode_simple_string(message)
+
     def test_serialize_int(self):
         message = 5
         actual = encode_int(message)
