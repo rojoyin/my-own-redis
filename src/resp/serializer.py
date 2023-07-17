@@ -13,3 +13,7 @@ def encode_int(message):
     if not isinstance(message, int):
         raise ValueError("Not a valid integer")
     return f":{message}\r\n"
+
+
+def encode_bulk_string(message):
+    return f"${len(message)}\r\n{message}\r\n"
