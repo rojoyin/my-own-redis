@@ -28,3 +28,14 @@ def encode_error(message):
 def encode_array(message):
     if message is None:
         return "*-1\r\n"
+    encoded_items = [encode_message(item) for item in message]
+    return "*" + str(len(encoded_items)) + "\r\n" + "".join(encoded_items)
+
+
+def encode_message(message):
+    if message is None:
+        return encode_bulk_string(message)
+    if isinstance(message, str):
+        return encode_bulk_string(message)
+    if isinstance(message, int):
+        return encode_int(int(message))
