@@ -16,6 +16,8 @@ def encode_int(message):
 
 
 def encode_bulk_string(message):
+    if message is None:
+        return "$-1\r\n"
     return f"${len(message)}\r\n{message}\r\n"
 
 
