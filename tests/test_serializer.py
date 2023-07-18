@@ -1,6 +1,7 @@
 import unittest
 
-from src.resp.serializer import encode_simple_string, is_simple_string, encode_int, encode_bulk_string, encode_error
+from src.resp.serializer import encode_simple_string, is_simple_string, encode_int, encode_bulk_string, encode_error, \
+    encode_array
 
 
 class RESPTest(unittest.TestCase):
