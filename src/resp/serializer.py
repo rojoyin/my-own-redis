@@ -17,3 +17,7 @@ def encode_int(message):
 
 def encode_bulk_string(message):
     return f"${len(message)}\r\n{message}\r\n"
+
+
+def encode_error(message):
+    return f"-{message}\r\n"
