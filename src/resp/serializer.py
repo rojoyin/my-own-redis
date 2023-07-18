@@ -39,3 +39,10 @@ def encode_message(message):
         return encode_bulk_string(message)
     if isinstance(message, int):
         return encode_int(int(message))
+
+
+def encode_message_to_resp(message):
+    if isinstance(message, list):
+        return encode_array(message)
+
+    return encode_message(message)
