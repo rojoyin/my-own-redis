@@ -1,7 +1,7 @@
 import unittest
 
 from src.resp.serializer import encode_simple_string, is_simple_string, encode_int, encode_bulk_string, encode_error, \
-    encode_array
+    encode_array, encode_message_to_resp
 
 
 class RESPTest(unittest.TestCase):
@@ -69,4 +69,10 @@ class RESPTest(unittest.TestCase):
         message = ["Hello", 42, None, "World"]
         actual = encode_array(message)
         expected = "*4\r\n$5\r\nHello\r\n:42\r\n$-1\r\n$5\r\nWorld\r\n"
+        self.assertEquals(actual, expected)
+
+    def test_encode_message_to_resp(self):
+        message = "holi"
+        actual = encode_message_to_resp(message)
+        expected = "$4\r\nholi\r\n"
         self.assertEquals(actual, expected)
