@@ -23,3 +23,8 @@ def encode_bulk_string(message):
 
 def encode_error(message):
     return f"-{message}\r\n"
+
+
+def encode_array(message):
+    if message is None:
+        return "*-1\r\n"
