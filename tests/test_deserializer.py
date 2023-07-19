@@ -10,6 +10,12 @@ class RESPDeserializerTest(unittest.TestCase):
         actual = decode_to_simple_string(resp_data)
         self.assertEqual(expected, actual)
 
+    def test_decode_empty_to_simple_string(self):
+        resp_data = "+\r\n"
+        expected = ""
+        actual = decode_to_simple_string(resp_data)
+        self.assertEqual(expected, actual)
+
     def test_decode_to_bulk_string(self):
         resp_data = "$3\r\nbye\r\n"
         expected = "bye"
