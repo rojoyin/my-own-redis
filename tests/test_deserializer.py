@@ -8,7 +8,7 @@ class RESPDeserializerTest(unittest.TestCase):
         resp_data = "+Hello, World!\r\n"
         expected = "Hello, World!"
         actual = decode_to_simple_string(resp_data)
-        self.assertEquals(expected, actual)
+        self.assertEqual(expected, actual)
 
     def test_decode_to_bulk_string(self):
         resp_data = "$3\r\nbye\r\n"
