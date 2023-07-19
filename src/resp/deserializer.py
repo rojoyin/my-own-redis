@@ -22,3 +22,9 @@ def decode_to_int(resp_data: str) -> int:
     encoded_pattern = rf"^\{EncodingHeader.INTEGER}([0-9]+){RESP_TRAILER}"
     match = re.search(encoded_pattern, resp_data)
     return int(match.group(1))
+
+
+def decode_to_error(resp_data: str) -> str:
+    encoded_pattern = rf"^\{EncodingHeader.ERROR}(.*){RESP_TRAILER}"
+    match = re.search(encoded_pattern, resp_data)
+    return match.group(1)
