@@ -1,12 +1,20 @@
 import unittest
 
+from src.resp.deserializer import decode_to_simple_string
+
 
 class RESPDeserializerTest(unittest.TestCase):
     def test_decode_to_simple_string(self):
         resp_data = "+Hello, World!\r\n"
         expected = "Hello, World!"
         actual = decode_to_simple_string(resp_data)
-        self.assertEquals(expected, actual)
+        self.assertEqual(expected, actual)
+
+    def test_decode_empty_to_simple_string(self):
+        resp_data = "+\r\n"
+        expected = ""
+        actual = decode_to_simple_string(resp_data)
+        self.assertEqual(expected, actual)
 
     def test_decode_to_bulk_string(self):
         resp_data = "$3\r\nbye\r\n"
