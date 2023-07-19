@@ -1,6 +1,6 @@
 import unittest
 
-from src.resp.deserializer import decode_to_simple_string, decode_to_bulk_string
+from src.resp.deserializer import decode_to_simple_string, decode_to_bulk_string, decode_to_int
 
 
 class RESPDeserializerTest(unittest.TestCase):

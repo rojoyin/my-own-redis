@@ -16,3 +16,9 @@ def decode_to_bulk_string(resp_data: str) -> str | None:
     encoded_pattern = rf"^\{EncodingHeader.BULK_STRING}([0-9]+){RESP_TRAILER}(.*){RESP_TRAILER}"
     match = re.search(encoded_pattern, resp_data)
     return match.group(2)
+
+
+def decode_to_int(resp_data: str) -> int:
+    encoded_pattern = rf"^\{EncodingHeader.INTEGER}([0-9]+){RESP_TRAILER}"
+    match = re.search(encoded_pattern, resp_data)
+    return int(match.group(1))
