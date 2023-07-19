@@ -1,5 +1,7 @@
 import unittest
 
+from src.resp.deserializer import decode_to_simple_string
+
 
 class RESPDeserializerTest(unittest.TestCase):
     def test_decode_to_simple_string(self):
