@@ -31,6 +31,45 @@ def decode_to_error(resp_data: str) -> str:
     return match.group(1)
 
 
-def decode_to_array(resp_data: str) -> List[int | None | str] | None:
+def decode_to_array(resp_data: str) -> List[int | None | str]:
     if resp_data == "*-1\r\n":
-        return None
+        return [None]
+
+    encoded_pattern = rf"^\{EncodingHeader.ARRAY}(\d+)\r\n([\S\s]*)"
+    match = re.search(encoded_pattern, resp_data)
+    encoded_messages = match.group(2)
+    decoded_messages = []
+    i = 0
+    while i < len(encoded_messages):
+        encoding_symbol = encoded_messages[i]
+
+        if encoding_symbol == EncodingHeader.BULK_STRING:
+            modifier = encoded_messages[i+1]
+            if modifier == "-":
+                decoded_messages.append(None)
+                i += len("$-1\r\n")
+                continue
+
+            string_size = int(modifier)
+            chunk_size = string_size + len(encoded_messages[i + 1]) + 2 * len(RESP_TRAILER) + 1
+            string_to_encode = encoded_messages[i:i+chunk_size]
+            decoded_messages.append(decode_to_bulk_string(string_to_encode))
+            i += chunk_size
+            continue
+
+        if encoding_symbol == EncodingHeader.INTEGER:
+            chunk_size = 0
+            j = i
+            while encoded_messages[i] != "\r":
+                chunk_size += 1
+                i += 1
+
+            chunk_size += len(RESP_TRAILER)
+            string_to_encode = encoded_messages[j:j+chunk_size]
+            decoded_messages.append(decode_to_int(string_to_encode))
+            i = j
+            i += chunk_size
+            continue
+
+    return decoded_messages
+

@@ -60,7 +60,7 @@ class RESPTest(unittest.TestCase):
         self.assertEquals(actual, expected)
 
     def test_serialize_null_array_values(self):
-        message = None
+        message = [None]
         actual = encode_array(message)
         expected = "*-1\r\n"
         self.assertEquals(actual, expected)

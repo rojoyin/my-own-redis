@@ -37,7 +37,7 @@ class RESPDeserializerTest(unittest.TestCase):
 
     def test_decode_to_none_array(self):
         resp_data = "*-1\r\n"
-        expected = None
+        expected = [None]
         actual = decode_to_array(resp_data)
         self.assertEqual(expected, actual)
 
