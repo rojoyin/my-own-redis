@@ -26,7 +26,7 @@ def encode_error(message: str) -> str:
 
 
 def encode_array(message: list[int | str | None]) -> str:
-    if message is None:
+    if message == [None]:
         return "*-1\r\n"
     encoded_items = [encode_message(item) for item in message]
     return "*" + str(len(encoded_items)) + "\r\n" + "".join(encoded_items)
