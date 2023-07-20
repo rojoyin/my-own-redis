@@ -73,3 +73,15 @@ def decode_to_array(resp_data: str) -> List[int | None | str]:
 
     return decoded_messages
 
+
+def decode_resp_to_message(resp_data: str) -> str | int | None | List[int | str | None]:
+    if resp_data.startswith(EncodingHeader.BULK_STRING):
+        return decode_to_bulk_string(resp_data)
+    if resp_data.startswith(EncodingHeader.SIMPLE_STRING):
+        return decode_to_simple_string(resp_data)
+    if resp_data.startswith(EncodingHeader.INTEGER):
+        return decode_to_int(resp_data)
+    if resp_data.startswith(EncodingHeader.ERROR):
+        return decode_to_error(resp_data)
+    if resp_data.startswith(EncodingHeader.ARRAY):
+        return decode_to_array(resp_data)
