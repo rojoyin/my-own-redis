@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 from src.resp import RESP_TRAILER, EncodingHeader
 
@@ -28,3 +29,8 @@ def decode_to_error(resp_data: str) -> str:
     encoded_pattern = rf"^\{EncodingHeader.ERROR}(.*){RESP_TRAILER}"
     match = re.search(encoded_pattern, resp_data)
     return match.group(1)
+
+
+def decode_to_array(resp_data: str) -> List[int | None | str] | None:
+    if resp_data == "*-1\r\n":
+        return None
