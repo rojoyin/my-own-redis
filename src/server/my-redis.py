@@ -1,6 +1,9 @@
 import socket
 import threading
 
+from src.resp.deserializer import decode_resp_to_message
+from src.resp.serializer import encode_message_to_resp
+
 
 class MyRedis:
 
@@ -9,15 +12,21 @@ class MyRedis:
         self.port = port
         self.server_socket = None
 
-
     def handle_client(self, client_socket):
         while True:
             try:
                 data = client_socket.recv(4096)
-                print(data)
 
                 if not data:
                     break
+
+                string_data = data.decode()
+                message = decode_resp_to_message(string_data)
+                command = message[0]
+
+                if command.lower() == "ping":
+                    response = encode_message_to_resp("pong")
+                    client_socket.send(bytes(response, 'UTF-8'))
 
             except Exception as e:
                 print(f"{e}")
