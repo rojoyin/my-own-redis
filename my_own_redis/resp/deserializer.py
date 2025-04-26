@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from src.resp import RESP_TRAILER, EncodingHeader
+from my_own_redis.resp import RESP_TRAILER, EncodingHeader
 
 
 def decode_to_simple_string(resp_data: str) -> str:

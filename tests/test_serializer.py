@@ -1,6 +1,6 @@
 import unittest
 
-from src.resp.serializer import encode_simple_string, is_simple_string, encode_int, encode_bulk_string, encode_error, \
+from my_own_redis.resp.serializer import encode_simple_string, is_simple_string, encode_int, encode_bulk_string, encode_error, \
     encode_array, encode_message_to_resp
 
 
