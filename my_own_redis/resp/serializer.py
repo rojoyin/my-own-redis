@@ -3,46 +3,46 @@ def is_simple_string(message: str) -> bool:
     return "\r" not in message and "\n" not in message
 
 
-def encode_simple_string(message: str) -> str:
+def encode_simple_string(message: str) -> bytes:
     if not is_simple_string(message):
         raise ValueError("Not a valid simple string")
-    return f"+{message}\r\n"
+    return f"+{message}\r\n".encode("utf-8")
 
 
-def encode_int(message: int) -> str:
+def encode_int(message: int) -> bytes:
     if not isinstance(message, int):
         raise ValueError("Not a valid integer")
-    return f":{message}\r\n"
+    return f":{message}\r\n".encode("utf-8")
 
 
-def encode_bulk_string(message: str | None) -> str:
+def encode_bulk_string(message: str | None) -> bytes:
     if message is None:
-        return "$-1\r\n"
-    return f"${len(message)}\r\n{message}\r\n"
+        return b"$-1\r\n"
+    return f"${len(message)}\r\n{message}\r\n".encode("utf-8")
 
 
-def encode_error(message: str) -> str:
-    return f"-{message}\r\n"
+def encode_error(message: str) -> bytes:
+    return f"-{message}\r\n".encode("utf-8")
 
 
-def encode_array(message: list[int | str | None]) -> str:
+def encode_array(message: list[int | str | None]) -> bytes:
     if message == [None]:
-        return "*-1\r\n"
-    encoded_items = [encode_message(item) for item in message]
-    return "*" + str(len(encoded_items)) + "\r\n" + "".join(encoded_items)
+        return b"*-1\r\n"
+    encoded_items = [encode_message(item).decode("utf-8") for item in message]
+    return ("*" + str(len(encoded_items)) + "\r\n" + "".join(encoded_items)).encode("utf-8")
 
 
-def encode_message(message: str | int | None) -> str:
+def encode_message(message: str | int | None) -> bytes | None:
     if message is None:
         return encode_bulk_string(message)
+    if isinstance(message, list):
+        return encode_array(message)
     if isinstance(message, str):
         return encode_bulk_string(message)
     if isinstance(message, int):
         return encode_int(int(message))
+    else:
+        raise ValueError("Not a valid message")
 
-
-def encode_message_to_resp(message: str | int | None | list[int | str | None]) -> str:
-    if isinstance(message, list):
-        return encode_array(message)
-
+def encode_message_to_resp(message: str | int | None | list[int | str | None]) -> bytes:
     return encode_message(message)
