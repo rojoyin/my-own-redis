@@ -1,8 +1,8 @@
 import socket
 import threading
 
-from src.resp.deserializer import decode_resp_to_message
-from src.resp.serializer import encode_message_to_resp
+from my_own_redis.resp.deserializer import decode_resp_to_message
+from my_own_redis.resp.serializer import encode_message_to_resp
 
 
 class MyRedis:
