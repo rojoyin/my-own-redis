@@ -85,3 +85,5 @@ def decode_resp_to_message(resp_data: str) -> str | int | None | List[int | str 
         return decode_to_error(resp_data)
     if resp_data.startswith(EncodingHeader.ARRAY):
         return decode_to_array(resp_data)
+    else:
+        raise ValueError(f"Invalid resp data: {resp_data}")
