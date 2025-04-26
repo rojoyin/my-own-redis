@@ -1,6 +1,11 @@
 def is_simple_string(message: str) -> bool:
     """Function to check if message is a simple string. Simple string must not contain CR(\r) or LF(\n) characters"""
-    return "\r" not in message and "\n" not in message
+    return (
+            isinstance(message, str) and
+            (("\r" not in message and "\n" not in message)
+            or
+            (message.lower() == "ok" or message.lower() == "pong"))
+    )
 
 
 def encode_simple_string(message: str) -> bytes:
@@ -37,6 +42,8 @@ def encode_message(message: str | int | None) -> bytes | None:
         return encode_bulk_string(message)
     if isinstance(message, list):
         return encode_array(message)
+    if is_simple_string(message):
+        return encode_simple_string(message)
     if isinstance(message, str):
         return encode_bulk_string(message)
     if isinstance(message, int):

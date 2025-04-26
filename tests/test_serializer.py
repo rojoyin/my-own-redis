@@ -68,11 +68,11 @@ class RESPTest(unittest.TestCase):
     def test_serialize_array(self):
         message = ["Hello", 42, None, "World"]
         actual = encode_array(message)
-        expected = b"*4\r\n$5\r\nHello\r\n:42\r\n$-1\r\n$5\r\nWorld\r\n"
+        expected = b"*4\r\n+Hello\r\n:42\r\n$-1\r\n+World\r\n"
         self.assertEqual(actual, expected)
 
     def test_encode_message_to_resp(self):
         message = "holi"
         actual = encode_message_to_resp(message)
-        expected = b"$4\r\nholi\r\n"
+        expected = b"+holi\r\n"
         self.assertEqual(actual, expected)
