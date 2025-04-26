@@ -2,7 +2,7 @@ import socket
 import threading
 
 from my_own_redis.resp.deserializer import decode_resp_to_message
-from my_own_redis.resp.serializer import encode_message_to_resp
+from my_own_redis.resp.serializer import encode_simple_string
 
 
 class MyRedis:
@@ -20,13 +20,13 @@ class MyRedis:
                 if not data:
                     break
 
-                string_data = data.decode()
+                string_data = data.decode("utf-8")
                 message = decode_resp_to_message(string_data)
                 command = message[0]
 
                 if command.lower() == "ping":
-                    response = encode_message_to_resp("pong")
-                    client_socket.send(bytes(response, 'UTF-8'))
+                    response = encode_simple_string("pong")
+                    client_socket.sendall(response)
 
             except Exception as e:
                 print(f"{e}")
